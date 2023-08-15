@@ -1,4 +1,14 @@
-import {AfterInsert, AfterRemove, AfterUpdate, BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+  AfterInsert,
+  AfterRemove,
+  AfterUpdate,
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { Report } from "../report/report.entity";
 
 @Entity()
 export class User {
@@ -8,13 +18,19 @@ export class User {
   @Column()
   email: string
 
+  @Column({default: false})
+  is_admin: boolean
+
   @Column()
   password: string
+
+  @OneToMany(() => Report, (report) => report.user )
+  reports: Report[]
 
   @BeforeInsert()
   logBeforeInsert(){
     const email = this.email
-    this.email = this.email + '_updated'
+    // this.email = this.email + '_updated'
     console.log(`insert user with change email from ${email} to ${this.email}`);
   }
 
