@@ -1,18 +1,36 @@
-import {AfterInsert, AfterRemove, AfterUpdate, BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+  AfterInsert,
+  AfterRemove,
+  AfterUpdate,
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column('varchar', {unique: true})
   email: string
 
-  @Column({default: false})
-  is_admin: boolean
-
-  @Column()
+  @Column('varchar')
   password: string
+
+  @Column('varchar', {nullable: true})
+  hashed_refresh_token: string
+
+  @Column('timestamp')
+  @CreateDateColumn()
+  created_at: Date
+
+  @Column('timestamp')
+  @UpdateDateColumn()
+  updated_at: Date
 
   // @OneToMany(() => Report, (report) => report.user )
   // reports: Report[]

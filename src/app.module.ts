@@ -1,8 +1,9 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserModule } from "./user/user.module";
-import { AuthService } from "./auth/auth.service";
-import { AuthModule } from "./auth/auth.module";
+import {Module} from "@nestjs/common";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {UserModule} from "./user/user.module";
+import {AuthModule} from "./auth/auth.module";
+import {AccessTokenGuard} from "./common/guards/access-token.guard";
+import {APP_GUARD} from "@nestjs/core";
 
 @Module({
   imports: [
@@ -20,7 +21,12 @@ import { AuthModule } from "./auth/auth.module";
     AuthModule
   ],
   controllers: [],
-  providers: [AuthService],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
+    }
+  ],
 })
 export class AppModule {
 
