@@ -1,7 +1,7 @@
-import { Controller, Post } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { RegisterUserDto } from "../user/dtos/register-user.dto";
-import { Tokens } from "./types/tokens.type";
+import {Controller, Post} from "@nestjs/common";
+import {AuthService} from "./auth.service";
+import {RegisterUserDto} from "../user/dtos/register-user.dto";
+import {Tokens} from "./types/tokens.type";
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +14,7 @@ export class AuthController {
 
   @Post('/register')
   register(registerUserDto: RegisterUserDto): Promise<Tokens>{
-    this.authService.register(registerUserDto)
+    return this.authService.register(registerUserDto)
   }
 
   @Post('/logout')
